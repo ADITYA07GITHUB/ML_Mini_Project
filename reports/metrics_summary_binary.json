@@ -1,0 +1,631 @@
+{
+  "dataset_path": "data/demo/cicids2017_demo.csv",
+  "mode": "binary",
+  "classes": [
+    "Normal",
+    "Suspicious"
+  ],
+  "timestamp": "2026-10-13 11:26:30",
+  "preprocessing_report": {
+    "initial_rows": 6000,
+    "deduplicated_rows": 6000,
+    "dropped_duplicates": 0,
+    "train_rows": 4500,
+    "test_rows": 1500,
+    "total_raw_features": 67,
+    "selected_features_count": 20,
+    "selected_features": [
+      "Total Fwd Packets",
+      "Flow Packets/s",
+      "Flow IAT Min",
+      "Fwd IAT Std",
+      "Fwd IAT Min",
+      "Bwd IAT Mean",
+      "Bwd IAT Std",
+      "Bwd IAT Max",
+      "Bwd IAT Min",
+      "Fwd Header Length",
+      "ACK Flag Count",
+      "act_data_pkt_fwd",
+      "Active Mean",
+      "Active Std",
+      "Active Max",
+      "Active Min",
+      "Idle Mean",
+      "Idle Std",
+      "Idle Max",
+      "Idle Min"
+    ],
+    "classes": [
+      "Normal",
+      "Suspicious"
+    ],
+    "multiclass": false,
+    "train_class_distribution": {
+      "0": 2700,
+      "1": 1800
+    },
+    "test_class_distribution": {
+      "0": 900,
+      "1": 600
+    }
+  },
+  "comparison_table": [
+    {
+      "model": "Random Forest",
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "macro_f1": 1.0,
+      "roc_auc": 1.0,
+      "training_time_sec": 0.148,
+      "latency_ms": 0.0179
+    },
+    {
+      "model": "K-Nearest Neighbors",
+      "accuracy": 0.9993,
+      "precision": 1.0,
+      "recall": 0.9983,
+      "f1_score": 0.9992,
+      "macro_f1": 0.9992,
+      "roc_auc": 0.9992,
+      "training_time_sec": 0.001,
+      "latency_ms": 0.0375
+    },
+    {
+      "model": "Multilayer Perceptron",
+      "accuracy": 0.9993,
+      "precision": 1.0,
+      "recall": 0.9983,
+      "f1_score": 0.9992,
+      "macro_f1": 0.9992,
+      "roc_auc": 1.0,
+      "training_time_sec": 0.367,
+      "latency_ms": 0.0012
+    },
+    {
+      "model": "Logistic Regression",
+      "accuracy": 0.9987,
+      "precision": 0.9983,
+      "recall": 0.9983,
+      "f1_score": 0.9983,
+      "macro_f1": 0.9983,
+      "roc_auc": 1.0,
+      "training_time_sec": 0.02,
+      "latency_ms": 0.0002
+    },
+    {
+      "model": "Support Vector Machine",
+      "accuracy": 0.8787,
+      "precision": 1.0,
+      "recall": 0.6967,
+      "f1_score": 0.8212,
+      "macro_f1": 0.8212,
+      "roc_auc": 0.9943,
+      "training_time_sec": 0.968,
+      "latency_ms": 0.0658
+    }
+  ],
+  "models_evaluated": [
+    "Random Forest",
+    "Support Vector Machine",
+    "K-Nearest Neighbors",
+    "Logistic Regression",
+    "Multilayer Perceptron"
+  ],
+  "best_model": "Random Forest",
+  "saved_model_paths": {
+    "Random Forest": "random_forest_binary.joblib",
+    "Support Vector Machine": "support_vector_machine_binary.joblib",
+    "K-Nearest Neighbors": "k-nearest_neighbors_binary.joblib",
+    "Logistic Regression": "logistic_regression_binary.joblib",
+    "Multilayer Perceptron": "multilayer_perceptron_binary.joblib"
+  },
+  "detailed_results": {
+    "Random Forest": {
+      "model_name": "Random Forest",
+      "is_binary": true,
+      "class_names": [
+        "Normal",
+        "Suspicious"
+      ],
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "macro_precision": 1.0,
+      "macro_recall": 1.0,
+      "macro_f1": 1.0,
+      "roc_auc": 1.0,
+      "roc_curve": {
+        "fpr": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0033,
+          0.0056,
+          1.0
+        ],
+        "tpr": [
+          0.0,
+          0.9633,
+          0.9783,
+          0.985,
+          0.995,
+          0.9967,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "auc": 1.0
+      },
+      "confusion_matrix": [
+        [
+          900,
+          0
+        ],
+        [
+          0,
+          600
+        ]
+      ],
+      "confusion_matrix_normalized": [
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "per_class": {
+        "Normal": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 900
+        },
+        "Suspicious": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 600
+        }
+      },
+      "training_time_sec": 0.148,
+      "inference_latency_ms": 0.0179,
+      "test_samples": 1500,
+      "plots": {
+        "confusion_matrix": "reports\\cm_random_forest.png",
+        "roc_curve": "reports\\roc_random_forest.png"
+      }
+    },
+    "Support Vector Machine": {
+      "model_name": "Support Vector Machine",
+      "is_binary": true,
+      "class_names": [
+        "Normal",
+        "Suspicious"
+      ],
+      "accuracy": 0.8787,
+      "precision": 1.0,
+      "recall": 0.6967,
+      "f1_score": 0.8212,
+      "macro_precision": 1.0,
+      "macro_recall": 0.6967,
+      "macro_f1": 0.8212,
+      "roc_auc": 0.9943,
+      "roc_curve": {
+        "fpr": [
+          0.0,
+          0.0011,
+          0.0033,
+          0.0044,
+          0.0056,
+          0.0067,
+          0.0067,
+          0.0078,
+          0.0089,
+          0.01,
+          0.0111,
+          0.0111,
+          0.0122,
+          0.0133,
+          0.0156,
+          0.0178,
+          0.0178,
+          0.0189,
+          0.02,
+          0.0211,
+          0.0233,
+          0.0233,
+          0.0244,
+          0.0256,
+          0.0289,
+          0.0311,
+          0.0311,
+          0.0333,
+          0.0367,
+          0.0378,
+          0.0389,
+          0.0389,
+          0.04,
+          0.0433,
+          0.0511,
+          0.0556,
+          0.0578,
+          0.0578,
+          0.06,
+          0.0656,
+          0.0667,
+          0.0722,
+          0.0722,
+          0.0744,
+          0.0811,
+          0.0844,
+          0.0956,
+          0.0956,
+          0.1156,
+          1.0
+        ],
+        "tpr": [
+          0.0,
+          0.6983,
+          0.74,
+          0.74,
+          0.7683,
+          0.7933,
+          0.8217,
+          0.83,
+          0.83,
+          0.8383,
+          0.87,
+          0.8833,
+          0.8933,
+          0.8933,
+          0.91,
+          0.915,
+          0.92,
+          0.925,
+          0.9267,
+          0.9267,
+          0.93,
+          0.9333,
+          0.9367,
+          0.9433,
+          0.9433,
+          0.9467,
+          0.9483,
+          0.9517,
+          0.9567,
+          0.9567,
+          0.96,
+          0.965,
+          0.9683,
+          0.97,
+          0.97,
+          0.975,
+          0.9767,
+          0.98,
+          0.9817,
+          0.9817,
+          0.9833,
+          0.985,
+          0.9867,
+          0.99,
+          0.99,
+          0.995,
+          0.9967,
+          0.9983,
+          1.0,
+          1.0
+        ],
+        "auc": 0.9943
+      },
+      "confusion_matrix": [
+        [
+          900,
+          0
+        ],
+        [
+          182,
+          418
+        ]
+      ],
+      "confusion_matrix_normalized": [
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.303,
+          0.697
+        ]
+      ],
+      "per_class": {
+        "Normal": {
+          "precision": 0.8318,
+          "recall": 1.0,
+          "f1_score": 0.9082,
+          "support": 900
+        },
+        "Suspicious": {
+          "precision": 1.0,
+          "recall": 0.6967,
+          "f1_score": 0.8212,
+          "support": 600
+        }
+      },
+      "training_time_sec": 0.968,
+      "inference_latency_ms": 0.0658,
+      "test_samples": 1500,
+      "plots": {
+        "confusion_matrix": "reports\\cm_support_vector_machine.png",
+        "roc_curve": "reports\\roc_support_vector_machine.png"
+      }
+    },
+    "K-Nearest Neighbors": {
+      "model_name": "K-Nearest Neighbors",
+      "is_binary": true,
+      "class_names": [
+        "Normal",
+        "Suspicious"
+      ],
+      "accuracy": 0.9993,
+      "precision": 1.0,
+      "recall": 0.9983,
+      "f1_score": 0.9992,
+      "macro_precision": 1.0,
+      "macro_recall": 0.9983,
+      "macro_f1": 0.9992,
+      "roc_auc": 0.9992,
+      "roc_curve": {
+        "fpr": [
+          0.0,
+          0.0,
+          0.0011,
+          1.0
+        ],
+        "tpr": [
+          0.0,
+          0.9983,
+          0.9983,
+          1.0
+        ],
+        "auc": 0.9992
+      },
+      "confusion_matrix": [
+        [
+          900,
+          0
+        ],
+        [
+          1,
+          599
+        ]
+      ],
+      "confusion_matrix_normalized": [
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.002,
+          0.998
+        ]
+      ],
+      "per_class": {
+        "Normal": {
+          "precision": 0.9989,
+          "recall": 1.0,
+          "f1_score": 0.9994,
+          "support": 900
+        },
+        "Suspicious": {
+          "precision": 1.0,
+          "recall": 0.9983,
+          "f1_score": 0.9992,
+          "support": 600
+        }
+      },
+      "training_time_sec": 0.001,
+      "inference_latency_ms": 0.0375,
+      "test_samples": 1500,
+      "plots": {
+        "confusion_matrix": "reports\\cm_k-nearest_neighbors.png",
+        "roc_curve": "reports\\roc_k-nearest_neighbors.png"
+      }
+    },
+    "Logistic Regression": {
+      "model_name": "Logistic Regression",
+      "is_binary": true,
+      "class_names": [
+        "Normal",
+        "Suspicious"
+      ],
+      "accuracy": 0.9987,
+      "precision": 0.9983,
+      "recall": 0.9983,
+      "f1_score": 0.9983,
+      "macro_precision": 0.9983,
+      "macro_recall": 0.9983,
+      "macro_f1": 0.9983,
+      "roc_auc": 1.0,
+      "roc_curve": {
+        "fpr": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0011,
+          0.0011,
+          1.0
+        ],
+        "tpr": [
+          0.0,
+          0.295,
+          0.3067,
+          0.315,
+          0.3217,
+          0.3283,
+          0.3367,
+          0.3417,
+          0.345,
+          0.3517,
+          0.355,
+          0.3667,
+          0.37,
+          0.3917,
+          0.395,
+          0.9983,
+          0.9983,
+          1.0,
+          1.0
+        ],
+        "auc": 1.0
+      },
+      "confusion_matrix": [
+        [
+          899,
+          1
+        ],
+        [
+          1,
+          599
+        ]
+      ],
+      "confusion_matrix_normalized": [
+        [
+          0.999,
+          0.001
+        ],
+        [
+          0.002,
+          0.998
+        ]
+      ],
+      "per_class": {
+        "Normal": {
+          "precision": 0.9989,
+          "recall": 0.9989,
+          "f1_score": 0.9989,
+          "support": 900
+        },
+        "Suspicious": {
+          "precision": 0.9983,
+          "recall": 0.9983,
+          "f1_score": 0.9983,
+          "support": 600
+        }
+      },
+      "training_time_sec": 0.02,
+      "inference_latency_ms": 0.0002,
+      "test_samples": 1500,
+      "plots": {
+        "confusion_matrix": "reports\\cm_logistic_regression.png",
+        "roc_curve": "reports\\roc_logistic_regression.png"
+      }
+    },
+    "Multilayer Perceptron": {
+      "model_name": "Multilayer Perceptron",
+      "is_binary": true,
+      "class_names": [
+        "Normal",
+        "Suspicious"
+      ],
+      "accuracy": 0.9993,
+      "precision": 1.0,
+      "recall": 0.9983,
+      "f1_score": 0.9992,
+      "macro_precision": 1.0,
+      "macro_recall": 0.9983,
+      "macro_f1": 0.9992,
+      "roc_auc": 1.0,
+      "roc_curve": {
+        "fpr": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "tpr": [
+          0.0,
+          0.46,
+          0.47,
+          0.4767,
+          0.4783,
+          0.485,
+          0.49,
+          1.0,
+          1.0
+        ],
+        "auc": 1.0
+      },
+      "confusion_matrix": [
+        [
+          900,
+          0
+        ],
+        [
+          1,
+          599
+        ]
+      ],
+      "confusion_matrix_normalized": [
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.002,
+          0.998
+        ]
+      ],
+      "per_class": {
+        "Normal": {
+          "precision": 0.9989,
+          "recall": 1.0,
+          "f1_score": 0.9994,
+          "support": 900
+        },
+        "Suspicious": {
+          "precision": 1.0,
+          "recall": 0.9983,
+          "f1_score": 0.9992,
+          "support": 600
+        }
+      },
+      "training_time_sec": 0.367,
+      "inference_latency_ms": 0.0012,
+      "test_samples": 1500,
+      "plots": {
+        "confusion_matrix": "reports\\cm_multilayer_perceptron.png",
+        "roc_curve": "reports\\roc_multilayer_perceptron.png"
+      }
+    }
+  }
+}

@@ -1,0 +1,799 @@
+{
+  "dataset_path": "data/demo/cicids2017_demo.csv",
+  "mode": "multiclass",
+  "classes": [
+    "BENIGN",
+    "Bot",
+    "DDoS",
+    "DoS Hulk",
+    "PortScan"
+  ],
+  "timestamp": "2026-10-13 11:26:51",
+  "preprocessing_report": {
+    "initial_rows": 6000,
+    "deduplicated_rows": 6000,
+    "dropped_duplicates": 0,
+    "train_rows": 4500,
+    "test_rows": 1500,
+    "total_raw_features": 67,
+    "selected_features_count": 20,
+    "selected_features": [
+      "Total Fwd Packets",
+      "Flow Packets/s",
+      "Flow IAT Min",
+      "Fwd IAT Std",
+      "Fwd IAT Min",
+      "Bwd IAT Mean",
+      "Bwd IAT Std",
+      "Bwd IAT Max",
+      "Bwd IAT Min",
+      "Fwd Header Length",
+      "ACK Flag Count",
+      "act_data_pkt_fwd",
+      "Active Mean",
+      "Active Std",
+      "Active Max",
+      "Active Min",
+      "Idle Mean",
+      "Idle Std",
+      "Idle Max",
+      "Idle Min"
+    ],
+    "classes": [
+      "BENIGN",
+      "Bot",
+      "DDoS",
+      "DoS Hulk",
+      "PortScan"
+    ],
+    "multiclass": true,
+    "train_class_distribution": {
+      "0": 2700,
+      "2": 675,
+      "4": 540,
+      "3": 360,
+      "1": 225
+    },
+    "test_class_distribution": {
+      "0": 900,
+      "2": 225,
+      "4": 180,
+      "3": 120,
+      "1": 75
+    }
+  },
+  "comparison_table": [
+    {
+      "model": "Random Forest",
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "macro_f1": 1.0,
+      "roc_auc": 1.0,
+      "training_time_sec": 0.147,
+      "latency_ms": 0.0193
+    },
+    {
+      "model": "K-Nearest Neighbors",
+      "accuracy": 0.9993,
+      "precision": 0.9993,
+      "recall": 0.9993,
+      "f1_score": 0.9993,
+      "macro_f1": 0.9994,
+      "roc_auc": 0.9994,
+      "training_time_sec": 0.001,
+      "latency_ms": 0.0308
+    },
+    {
+      "model": "Logistic Regression",
+      "accuracy": 0.9993,
+      "precision": 0.9993,
+      "recall": 0.9993,
+      "f1_score": 0.9993,
+      "macro_f1": 0.9994,
+      "roc_auc": 1.0,
+      "training_time_sec": 0.042,
+      "latency_ms": 0.0004
+    },
+    {
+      "model": "Multilayer Perceptron",
+      "accuracy": 0.9987,
+      "precision": 0.9987,
+      "recall": 0.9987,
+      "f1_score": 0.9987,
+      "macro_f1": 0.9989,
+      "roc_auc": 1.0,
+      "training_time_sec": 0.446,
+      "latency_ms": 0.0008
+    },
+    {
+      "model": "Support Vector Machine",
+      "accuracy": 0.878,
+      "precision": 0.7786,
+      "recall": 0.878,
+      "f1_score": 0.8236,
+      "macro_f1": 0.7802,
+      "roc_auc": 0.9999,
+      "training_time_sec": 0.609,
+      "latency_ms": 0.085
+    }
+  ],
+  "models_evaluated": [
+    "Random Forest",
+    "Support Vector Machine",
+    "K-Nearest Neighbors",
+    "Logistic Regression",
+    "Multilayer Perceptron"
+  ],
+  "best_model": "Random Forest",
+  "saved_model_paths": {
+    "Random Forest": "random_forest_multiclass.joblib",
+    "Support Vector Machine": "support_vector_machine_multiclass.joblib",
+    "K-Nearest Neighbors": "k-nearest_neighbors_multiclass.joblib",
+    "Logistic Regression": "logistic_regression_multiclass.joblib",
+    "Multilayer Perceptron": "multilayer_perceptron_multiclass.joblib"
+  },
+  "detailed_results": {
+    "Random Forest": {
+      "model_name": "Random Forest",
+      "is_binary": false,
+      "class_names": [
+        "BENIGN",
+        "Bot",
+        "DDoS",
+        "DoS Hulk",
+        "PortScan"
+      ],
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "macro_precision": 1.0,
+      "macro_recall": 1.0,
+      "macro_f1": 1.0,
+      "roc_auc": 1.0,
+      "roc_curve": null,
+      "confusion_matrix": [
+        [
+          900,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          75,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          225,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          120,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          180
+        ]
+      ],
+      "confusion_matrix_normalized": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "per_class": {
+        "BENIGN": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 900
+        },
+        "Bot": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 75
+        },
+        "DDoS": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 225
+        },
+        "DoS Hulk": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 120
+        },
+        "PortScan": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 180
+        }
+      },
+      "training_time_sec": 0.147,
+      "inference_latency_ms": 0.0193,
+      "test_samples": 1500,
+      "plots": {
+        "confusion_matrix": "reports\\cm_random_forest.png"
+      }
+    },
+    "Support Vector Machine": {
+      "model_name": "Support Vector Machine",
+      "is_binary": false,
+      "class_names": [
+        "BENIGN",
+        "Bot",
+        "DDoS",
+        "DoS Hulk",
+        "PortScan"
+      ],
+      "accuracy": 0.878,
+      "precision": 0.7786,
+      "recall": 0.878,
+      "f1_score": 0.8236,
+      "macro_precision": 0.7662,
+      "macro_recall": 0.7973,
+      "macro_f1": 0.7802,
+      "roc_auc": 0.9999,
+      "roc_curve": null,
+      "confusion_matrix": [
+        [
+          900,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          75,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          0,
+          222,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          120,
+          0
+        ],
+        [
+          180,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "confusion_matrix_normalized": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.013,
+          0.0,
+          0.987,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "per_class": {
+        "BENIGN": {
+          "precision": 0.831,
+          "recall": 1.0,
+          "f1_score": 0.9077,
+          "support": 900
+        },
+        "Bot": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 75
+        },
+        "DDoS": {
+          "precision": 1.0,
+          "recall": 0.9867,
+          "f1_score": 0.9933,
+          "support": 225
+        },
+        "DoS Hulk": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 120
+        },
+        "PortScan": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "support": 180
+        }
+      },
+      "training_time_sec": 0.609,
+      "inference_latency_ms": 0.085,
+      "test_samples": 1500,
+      "plots": {
+        "confusion_matrix": "reports\\cm_support_vector_machine.png"
+      }
+    },
+    "K-Nearest Neighbors": {
+      "model_name": "K-Nearest Neighbors",
+      "is_binary": false,
+      "class_names": [
+        "BENIGN",
+        "Bot",
+        "DDoS",
+        "DoS Hulk",
+        "PortScan"
+      ],
+      "accuracy": 0.9993,
+      "precision": 0.9993,
+      "recall": 0.9993,
+      "f1_score": 0.9993,
+      "macro_precision": 0.9998,
+      "macro_recall": 0.9991,
+      "macro_f1": 0.9994,
+      "roc_auc": 0.9994,
+      "roc_curve": null,
+      "confusion_matrix": [
+        [
+          900,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          75,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          224,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          120,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          180
+        ]
+      ],
+      "confusion_matrix_normalized": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.004,
+          0.0,
+          0.996,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "per_class": {
+        "BENIGN": {
+          "precision": 0.9989,
+          "recall": 1.0,
+          "f1_score": 0.9994,
+          "support": 900
+        },
+        "Bot": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 75
+        },
+        "DDoS": {
+          "precision": 1.0,
+          "recall": 0.9956,
+          "f1_score": 0.9978,
+          "support": 225
+        },
+        "DoS Hulk": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 120
+        },
+        "PortScan": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 180
+        }
+      },
+      "training_time_sec": 0.001,
+      "inference_latency_ms": 0.0308,
+      "test_samples": 1500,
+      "plots": {
+        "confusion_matrix": "reports\\cm_k-nearest_neighbors.png"
+      }
+    },
+    "Logistic Regression": {
+      "model_name": "Logistic Regression",
+      "is_binary": false,
+      "class_names": [
+        "BENIGN",
+        "Bot",
+        "DDoS",
+        "DoS Hulk",
+        "PortScan"
+      ],
+      "accuracy": 0.9993,
+      "precision": 0.9993,
+      "recall": 0.9993,
+      "f1_score": 0.9993,
+      "macro_precision": 0.9998,
+      "macro_recall": 0.9991,
+      "macro_f1": 0.9994,
+      "roc_auc": 1.0,
+      "roc_curve": null,
+      "confusion_matrix": [
+        [
+          900,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          75,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          224,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          120,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          180
+        ]
+      ],
+      "confusion_matrix_normalized": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.004,
+          0.0,
+          0.996,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "per_class": {
+        "BENIGN": {
+          "precision": 0.9989,
+          "recall": 1.0,
+          "f1_score": 0.9994,
+          "support": 900
+        },
+        "Bot": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 75
+        },
+        "DDoS": {
+          "precision": 1.0,
+          "recall": 0.9956,
+          "f1_score": 0.9978,
+          "support": 225
+        },
+        "DoS Hulk": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 120
+        },
+        "PortScan": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 180
+        }
+      },
+      "training_time_sec": 0.042,
+      "inference_latency_ms": 0.0004,
+      "test_samples": 1500,
+      "plots": {
+        "confusion_matrix": "reports\\cm_logistic_regression.png"
+      }
+    },
+    "Multilayer Perceptron": {
+      "model_name": "Multilayer Perceptron",
+      "is_binary": false,
+      "class_names": [
+        "BENIGN",
+        "Bot",
+        "DDoS",
+        "DoS Hulk",
+        "PortScan"
+      ],
+      "accuracy": 0.9987,
+      "precision": 0.9987,
+      "recall": 0.9987,
+      "f1_score": 0.9987,
+      "macro_precision": 0.9996,
+      "macro_recall": 0.9982,
+      "macro_f1": 0.9989,
+      "roc_auc": 1.0,
+      "roc_curve": null,
+      "confusion_matrix": [
+        [
+          900,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          75,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          223,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          120,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          180
+        ]
+      ],
+      "confusion_matrix_normalized": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.009,
+          0.0,
+          0.991,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "per_class": {
+        "BENIGN": {
+          "precision": 0.9978,
+          "recall": 1.0,
+          "f1_score": 0.9989,
+          "support": 900
+        },
+        "Bot": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 75
+        },
+        "DDoS": {
+          "precision": 1.0,
+          "recall": 0.9911,
+          "f1_score": 0.9955,
+          "support": 225
+        },
+        "DoS Hulk": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 120
+        },
+        "PortScan": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 180
+        }
+      },
+      "training_time_sec": 0.446,
+      "inference_latency_ms": 0.0008,
+      "test_samples": 1500,
+      "plots": {
+        "confusion_matrix": "reports\\cm_multilayer_perceptron.png"
+      }
+    }
+  }
+}

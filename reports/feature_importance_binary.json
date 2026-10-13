@@ -1,0 +1,170 @@
+{
+  "global_importance": {
+    "method": "Mean Decrease in Impurity (MDI) / Gini Feature Importance",
+    "top_features": [
+      {
+        "feature": "Bwd IAT Mean",
+        "importance": 0.1234,
+        "description": "Network flow metric characterizing session transmission dynamics."
+      },
+      {
+        "feature": "Bwd IAT Max",
+        "importance": 0.1071,
+        "description": "Network flow metric characterizing session transmission dynamics."
+      },
+      {
+        "feature": "Flow IAT Min",
+        "importance": 0.0976,
+        "description": "Network flow metric characterizing session transmission dynamics."
+      },
+      {
+        "feature": "Bwd IAT Min",
+        "importance": 0.0888,
+        "description": "Network flow metric characterizing session transmission dynamics."
+      },
+      {
+        "feature": "Fwd IAT Std",
+        "importance": 0.0867,
+        "description": "Network flow metric characterizing session transmission dynamics."
+      },
+      {
+        "feature": "Bwd IAT Std",
+        "importance": 0.0839,
+        "description": "Network flow metric characterizing session transmission dynamics."
+      },
+      {
+        "feature": "Fwd IAT Min",
+        "importance": 0.0641,
+        "description": "Network flow metric characterizing session transmission dynamics."
+      },
+      {
+        "feature": "Idle Mean",
+        "importance": 0.0535,
+        "description": "Mean duration the flow remained dormant. Periodic idle intervals characterize botnet Command-and-Control (C2) heartbeat pulses."
+      },
+      {
+        "feature": "Flow Packets/s",
+        "importance": 0.0474,
+        "description": "Packet rate per second. Dramatic spikes are classic indicators of automated flooding attacks (SYN flood, UDP flood, DDoS)."
+      },
+      {
+        "feature": "Idle Min",
+        "importance": 0.0471,
+        "description": "Network flow metric characterizing session transmission dynamics."
+      },
+      {
+        "feature": "Active Max",
+        "importance": 0.0385,
+        "description": "Network flow metric characterizing session transmission dynamics."
+      },
+      {
+        "feature": "Idle Std",
+        "importance": 0.0355,
+        "description": "Network flow metric characterizing session transmission dynamics."
+      },
+      {
+        "feature": "Active Mean",
+        "importance": 0.0353,
+        "description": "Mean duration the flow was actively transmitting before an idle state. Reflects application transmission patterns."
+      },
+      {
+        "feature": "Active Std",
+        "importance": 0.0343,
+        "description": "Network flow metric characterizing session transmission dynamics."
+      },
+      {
+        "feature": "Idle Max",
+        "importance": 0.0292,
+        "description": "Network flow metric characterizing session transmission dynamics."
+      }
+    ],
+    "disclaimer": "Feature importance reflects statistical utility for model decision partitions and does not imply direct physical causation of malicious intent."
+  },
+  "permutation_importance": {
+    "method": "Permutation Importance (Evaluated on Held-out Test Data)",
+    "features": [
+      {
+        "feature": "Bwd IAT Std",
+        "importance_mean": 0.0004,
+        "importance_std": 0.0003,
+        "description": "Network flow metric characterizing transmission dynamics."
+      },
+      {
+        "feature": "Bwd IAT Mean",
+        "importance_mean": 0.0004,
+        "importance_std": 0.0003,
+        "description": "Network flow metric characterizing transmission dynamics."
+      },
+      {
+        "feature": "Idle Min",
+        "importance_mean": 0.0,
+        "importance_std": 0.0,
+        "description": "Network flow metric characterizing transmission dynamics."
+      },
+      {
+        "feature": "Idle Max",
+        "importance_mean": 0.0,
+        "importance_std": 0.0,
+        "description": "Network flow metric characterizing transmission dynamics."
+      },
+      {
+        "feature": "Idle Mean",
+        "importance_mean": 0.0,
+        "importance_std": 0.0,
+        "description": "Mean duration the flow remained dormant. Periodic idle intervals characterize botnet Command-and-Control (C2) heartbeat pulses."
+      },
+      {
+        "feature": "Idle Std",
+        "importance_mean": 0.0,
+        "importance_std": 0.0,
+        "description": "Network flow metric characterizing transmission dynamics."
+      },
+      {
+        "feature": "Active Min",
+        "importance_mean": 0.0,
+        "importance_std": 0.0,
+        "description": "Network flow metric characterizing transmission dynamics."
+      },
+      {
+        "feature": "Active Max",
+        "importance_mean": 0.0,
+        "importance_std": 0.0,
+        "description": "Network flow metric characterizing transmission dynamics."
+      },
+      {
+        "feature": "act_data_pkt_fwd",
+        "importance_mean": 0.0,
+        "importance_std": 0.0,
+        "description": "Network flow metric characterizing transmission dynamics."
+      },
+      {
+        "feature": "ACK Flag Count",
+        "importance_mean": 0.0,
+        "importance_std": 0.0,
+        "description": "Count of ACK flags. Expected in established bidirectional TCP streams; absence during high packet flows signals scanning or reflection attacks."
+      }
+    ]
+  },
+  "selected_features": [
+    "Total Fwd Packets",
+    "Flow Packets/s",
+    "Flow IAT Min",
+    "Fwd IAT Std",
+    "Fwd IAT Min",
+    "Bwd IAT Mean",
+    "Bwd IAT Std",
+    "Bwd IAT Max",
+    "Bwd IAT Min",
+    "Fwd Header Length",
+    "ACK Flag Count",
+    "act_data_pkt_fwd",
+    "Active Mean",
+    "Active Std",
+    "Active Max",
+    "Active Min",
+    "Idle Mean",
+    "Idle Std",
+    "Idle Max",
+    "Idle Min"
+  ]
+}

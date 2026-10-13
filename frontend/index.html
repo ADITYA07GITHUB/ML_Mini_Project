@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Network Analysis Dashboard</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Chart.js (Loaded locally with CDN fallback for 100% offline support) -->
+  <script src="/static/assets/chart.umd.min.js"></script>
+  <script>if (typeof Chart === 'undefined') { document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"><\/script>'); }</script>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-icon">🌐</div>
+      <div class="brand-text">
+        <h1>Network Analysis Dashboard</h1>
+        <span>Traffic Intelligence &amp; Anomaly Detection</span>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="nav-links">
+        <li><button class="nav-btn active" data-view="overview">📊 Overview</button></li>
+        <li><button class="nav-btn" data-view="traffic">📁 Traffic Analysis</button></li>
+        <li><button class="nav-btn" data-view="detection">⚡ Detection Lab</button></li>
+        <li><button class="nav-btn" data-view="performance">📈 Model Performance</button></li>
+        <li><button class="nav-btn" data-view="explainability">🔍 Explainability</button></li>
+        <li><button class="nav-btn" data-view="system">ℹ️ System Info</button></li>
+      </ul>
+    </nav>
+
+    <div style="display:flex; align-items:center; gap:0.6rem;">
+      <div class="system-status-pill">
+        <span class="status-dot"></span>
+        <span id="healthStatus">Checking...</span>
+      </div>
+      <div class="system-status-pill" id="activeDatasetBadge" style="color:var(--accent-cyan); font-family:var(--font-mono);">
+        cicids2017_demo.csv
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- PAGE 1: OVERVIEW -->
+    <section id="view-overview" class="page-view active">
+      <div class="view-header">
+        <div>
+          <h2>Executive Network Defense Overview</h2>
+          <p>Real-time machine learning telemetry and behavioral anomaly analysis summary.</p>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="document.querySelector('[data-view=\'detection\']').click()">
+            ⚡ Open Detection Lab
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="grid-4" style="margin-bottom:1.5rem;">
+        <div class="card stat-card">
+          <div class="stat-header">
+            <span class="stat-label">Total Flows Evaluated</span>
+            <span class="stat-icon">🌐</span>
+          </div>
+          <div class="stat-value" id="statTotalFlows">--</div>
+          <div class="stat-footer">
+            <span class="stat-badge cyan">CIC-IDS2017</span>
+            <span>Standard flow schema</span>
+          </div>
+        </div>
+
+        <div class="card stat-card">
+          <div class="stat-header">
+            <span class="stat-label">Classified Suspicious</span>
+            <span class="stat-icon">⚠️</span>
+          </div>
+          <div class="stat-value" id="statSuspiciousCount" style="color:var(--accent-rose);">--</div>
+          <div class="stat-footer">
+            <span class="stat-badge rose" id="statSuspiciousPct">--%</span>
+            <span>Supervised ML boundary</span>
+          </div>
+        </div>
+
+        <div class="card stat-card">
+          <div class="stat-header">
+            <span class="stat-label">Flagged Anomalies</span>
+            <span class="stat-icon">🔬</span>
+          </div>
+          <div class="stat-value" id="statAnomalyCount" style="color:var(--accent-amber);">--</div>
+          <div class="stat-footer">
+            <span class="stat-badge amber" id="statAnomalyPct">--%</span>
+            <span>Unsupervised Isolation Forest</span>
+          </div>
+        </div>
+
+        <div class="card stat-card">
+          <div class="stat-header">
+            <span class="stat-label">Primary Classifier</span>
+            <span class="stat-icon">🤖</span>
+          </div>
+          <div class="stat-value" id="statActiveModel" style="font-size:1.35rem; color:var(--accent-cyan);">Random Forest</div>
+          <div class="stat-footer">
+            <span class="stat-badge emerald">100 Trees</span>
+            <span>Ensemble with SHAP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview Charts -->
+      <div class="grid-2-1" style="margin-bottom:1.5rem;">
+        <div class="card">
+          <div class="card-title">
+            <span>Network Traffic Class Distribution</span>
+            <span class="card-subtitle">Normal vs Identified Cyber-Attack Patterns</span>
+          </div>
+          <div style="height:280px; position:relative;">
+            <canvas id="overviewDistributionChart"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span>Key Influential Features</span>
+            <span class="card-subtitle">Top Gini Impurity Weights</span>
+          </div>
+          <div id="overviewTopFeaturesList" style="margin-top:0.5rem;">
+            <!-- Injected by app.js -->
+            <p style="color:var(--text-muted); font-size:0.8rem;">Loading feature weights...</p>
+          </div>
+          <div style="margin-top:1.25rem;">
+            <button class="btn btn-sm btn-secondary" style="width:100%;" onclick="document.querySelector('[data-view=\'explainability\']').click()">
+              Explore Model Explainability &rarr;
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Architecture Card -->
+      <div class="card">
+        <div class="card-title">
+          <span>Dual-Engine Detection Architecture</span>
+          <span class="card-subtitle">Supervised vs Unsupervised ML Coordination</span>
+        </div>
+        <div class="grid-2">
+          <div style="background:var(--bg-card-hover); padding:1rem; border-radius:var(--radius-sm); border-left:3px solid var(--accent-cyan);">
+            <strong style="color:var(--accent-cyan); display:block; margin-bottom:0.35rem;">1. Supervised Learning Engine</strong>
+            <p style="font-size:0.8rem; color:var(--text-secondary); line-height:1.45;">
+              Trained on verified labeled flows (Normal, DDoS, PortScan, DoS Hulk, Bot). Accurately distinguishes known attack signatures with high precision and low false positives using Random Forest, SVM, KNN, and Neural Networks.
+            </p>
+          </div>
+          <div style="background:var(--bg-card-hover); padding:1rem; border-radius:var(--radius-sm); border-left:3px solid var(--accent-amber);">
+            <strong style="color:var(--accent-amber); display:block; margin-bottom:0.35rem;">2. Unsupervised Anomaly Engine</strong>
+            <p style="font-size:0.8rem; color:var(--text-secondary); line-height:1.45;">
+              Isolation Forest continuously models baseline traffic manifolds without relying on attack labels. Flags novel zero-day behavioral deviations and abnormal volume spikes using recursive partitioning depth.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: TRAFFIC ANALYSIS -->
+    <section id="view-traffic" class="page-view">
+      <div class="view-header">
+        <div>
+          <h2>Network Traffic Ingestion &amp; Inspection</h2>
+          <p>Ingest network flow captures, validate schemas, and inspect feature statistics.</p>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary" id="btnLoadSample">🔄 Use Demo Dataset</button>
+        </div>
+      </div>
+
+      <!-- Dropzone -->
+      <div class="dropzone" id="csvDropzone" style="margin-bottom:1.5rem;">
+        <div class="dropzone-icon">📥</div>
+        <p><strong>Click to browse</strong> or drag and drop a network flow CSV here</p>
+        <span class="dropzone-hint">Supports CIC-IDS2017 schema, handles whitespace, infinite values, and missing fields</span>
+        <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
+      </div>
+
+      <!-- Schema Validation & Summary Cards -->
+      <div class="grid-4" style="margin-bottom:1.5rem;">
+        <div class="card stat-card">
+          <span class="stat-label">File Name</span>
+          <div class="stat-value" id="previewFilename" style="font-size:1rem; word-break:break-all;">--</div>
+        </div>
+        <div class="card stat-card">
+          <span class="stat-label">Total Records</span>
+          <div class="stat-value" id="previewRowCount">--</div>
+        </div>
+        <div class="card stat-card">
+          <span class="stat-label">Feature Columns</span>
+          <div class="stat-value" id="previewColCount">--</div>
+        </div>
+        <div class="card stat-card">
+          <span class="stat-label">Missing / Inf Values</span>
+          <div class="stat-value" id="previewMissingCount" style="color:var(--accent-emerald);">0</div>
+        </div>
+      </div>
+
+      <!-- Preview Table -->
+      <div class="card">
+        <div class="card-title">
+          <span>Flow Records Sample Preview</span>
+          <span class="card-subtitle">Detected Target: <code id="previewLabelCol" style="color:var(--accent-cyan);">Label</code></span>
+        </div>
+        <div class="table-container" style="max-height:360px;">
+          <table>
+            <thead id="trafficPreviewThead"></thead>
+            <tbody id="trafficPreviewTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 3: DETECTION LAB -->
+    <section id="view-detection" class="page-view">
+      <div class="view-header">
+        <div>
+          <h2>Intelligent Detection Lab</h2>
+          <p>Run supervised classifiers and unsupervised anomaly detection on active network traffic.</p>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-secondary" id="btnDownloadResults" style="display:none;" download="network_analysis.csv">
+            📥 Export CSV
+          </a>
+          <button class="btn btn-primary" id="btnRunAnalyze">
+            ⚡ Run Intrusion Analysis
+          </button>
+        </div>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div style="display:flex; flex-wrap:wrap; gap:1.25rem; align-items:center;">
+          <div style="display:flex; flex-direction:column; gap:0.35rem;">
+            <label style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:600;">Classification Model</label>
+            <select id="modelSelector" style="min-width:260px;"></select>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:0.35rem;">
+            <label style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:600;">Detection Mode</label>
+            <div class="btn-group">
+              <button class="btn btn-sm btn-primary mode-toggle-btn" data-mode="binary">Binary (Normal / Suspicious)</button>
+              <button class="btn btn-sm mode-toggle-btn" data-mode="multiclass">Multiclass (All Attack Types)</button>
+            </div>
+          </div>
+
+          <div style="margin-left:auto; display:flex; gap:1rem; align-items:center;">
+            <div style="text-align:right;">
+              <span style="font-size:0.7rem; color:var(--text-muted); display:block;">Active Configuration:</span>
+              <strong id="detModelBadge" style="font-size:0.85rem; color:var(--accent-cyan);">Random Forest [binary]</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detection Run Summary -->
+      <div class="grid-3" style="margin-bottom:1.5rem;">
+        <div class="card stat-card">
+          <span class="stat-label">Flows Analyzed</span>
+          <div class="stat-value" id="detAnalyzedCount">--</div>
+        </div>
+        <div class="card stat-card">
+          <span class="stat-label">Potentially Suspicious</span>
+          <div class="stat-value" id="detSuspiciousCount" style="color:var(--accent-rose);">--</div>
+        </div>
+        <div class="card stat-card">
+          <span class="stat-label">Statistical Anomalies</span>
+          <div class="stat-value" id="detAnomalyCount" style="color:var(--accent-amber);">--</div>
+        </div>
+      </div>
+
+      <!-- Filter Controls & Predictions Table -->
+      <div class="card">
+        <div class="card-title">
+          <span>Flow Classification &amp; Anomaly Results</span>
+          <div class="btn-group">
+            <button class="btn btn-sm table-filter-btn active" data-filter="all">All</button>
+            <button class="btn btn-sm table-filter-btn" data-filter="suspicious">Suspicious</button>
+            <button class="btn btn-sm table-filter-btn" data-filter="normal">Normal</button>
+            <button class="btn btn-sm table-filter-btn" data-filter="anomaly">High Anomaly</button>
+          </div>
+        </div>
+
+        <div class="alert-box" style="font-size:0.75rem; margin-bottom:1rem;">
+          ℹ️ <strong>Educational Note:</strong> A prediction of "Suspicious" indicates statistical alignment with training attack features. It does not certify an active cyberattack.
+        </div>
+
+        <div class="table-container" style="max-height:480px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Record</th>
+                <th>Classification</th>
+                <th>Model Confidence</th>
+                <th>Isolation Forest</th>
+                <th>Cluster</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="predictionsTbody">
+              <tr>
+                <td colspan="6" style="text-align:center; color:var(--text-muted); padding:2rem;">
+                  Click "Run Intrusion Analysis" above to evaluate records.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4: MODEL PERFORMANCE -->
+    <section id="view-performance" class="page-view">
+      <div class="view-header">
+        <div>
+          <h2>Empirical Model Performance &amp; Evaluation</h2>
+          <p>Real evaluation benchmarks on held-out test splits. No hardcoded scores.</p>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-primary mode-toggle-btn" data-mode="binary">Binary Metrics</button>
+          <button class="btn btn-sm mode-toggle-btn" data-mode="multiclass">Multiclass Metrics</button>
+        </div>
+      </div>
+
+      <!-- Comparison Table -->
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-title">
+          <span>Algorithm Comparison Matrix (Held-out Test Split)</span>
+          <span class="card-subtitle">Stratified 75% Train / 25% Test Split</span>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Algorithm</th>
+                <th>Accuracy</th>
+                <th>Precision</th>
+                <th>Recall</th>
+                <th>F1-Score</th>
+                <th>ROC-AUC</th>
+                <th>Training Time</th>
+                <th>Latency (per sample)</th>
+              </tr>
+            </thead>
+            <tbody id="comparisonTableTbody">
+              <tr><td colspan="8" style="text-align:center; padding:1.5rem;">Loading benchmark results...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Visual Charts Grid -->
+      <div class="grid-2" style="margin-bottom:1.5rem;">
+        <div class="card">
+          <div class="card-title">
+            <span>Accuracy &amp; F1-Score Comparison</span>
+            <span class="card-subtitle">Real Measured Test Set Performance</span>
+          </div>
+          <div style="height:260px;">
+            <canvas id="modelComparisonChart"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span>ROC Curve (Receiver Operating Characteristic)</span>
+            <span class="card-subtitle">True Positive Rate vs False Positive Rate</span>
+          </div>
+          <div style="height:260px;">
+            <canvas id="rocCurveChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confusion Matrix & Split Methodology -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">
+            <span>Confusion Matrix Heatmap (Top Classifier)</span>
+            <span class="card-subtitle">Diagonal = Correct Predictions</span>
+          </div>
+          <div id="confusionMatrixContainer" style="overflow-x:auto;">
+            <!-- Rendered by app.js -->
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span>Data Leakage Safeguards</span>
+            <span class="card-subtitle">Academic Rigor &amp; Methodology</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.8rem; color:var(--text-secondary); line-height:1.45;">
+            <div style="background:var(--bg-card-hover); padding:0.75rem; border-radius:var(--radius-sm);">
+              <strong style="color:var(--text-primary); display:block; margin-bottom:0.2rem;">1. Chronological &amp; Stratified Split</strong>
+              Train and test partitions are separated strictly before computing statistics. Identifiers (Source IP, Flow ID, Timestamps) are removed to prevent superficial memorization.
+            </div>
+            <div style="background:var(--bg-card-hover); padding:0.75rem; border-radius:var(--radius-sm);">
+              <strong style="color:var(--text-primary); display:block; margin-bottom:0.2rem;">2. Training-Fitted Transformers</strong>
+              All scalers (RobustScaler), median imputers, and ANOVA F-test feature selectors are fit exclusively on the training partition.
+            </div>
+            <div style="background:var(--bg-card-hover); padding:0.75rem; border-radius:var(--radius-sm);">
+              <strong style="color:var(--text-primary); display:block; margin-bottom:0.2rem;">3. Imbalanced Metric Focus</strong>
+              For severe class imbalances, accuracy can be misleading. We prioritize macro/weighted F1-score and per-class recall.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 5: EXPLAINABILITY -->
+    <section id="view-explainability" class="page-view">
+      <div class="view-header">
+        <div>
+          <h2>Explainable AI (XAI) &amp; Feature Attribution</h2>
+          <p>Understand model decision boundaries using Tree MDI, Permutation Importance, and SHAP.</p>
+        </div>
+      </div>
+
+      <div class="alert-box warning" style="margin-bottom:1.5rem;">
+        ⚠️ <strong>Scientific Disclaimer:</strong> Feature importance reveals mathematical correlation patterns utilized by the decision trees. It does not establish causal adversary attribution or legal evidence.
+      </div>
+
+      <!-- Global Importance Chart & Permutation Table -->
+      <div class="grid-2" style="margin-bottom:1.5rem;">
+        <div class="card">
+          <div class="card-title">
+            <span>Global Feature Importance (Gini MDI)</span>
+            <span class="card-subtitle">Random Forest Tree Partition Weights</span>
+          </div>
+          <div style="height:320px;">
+            <canvas id="globalImportanceChart"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span>Permutation Feature Importance</span>
+            <span class="card-subtitle">Evaluated on Held-out Test Data</span>
+          </div>
+          <div class="table-container" style="max-height:320px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Feature</th>
+                  <th>Importance Mean</th>
+                  <th>Std Dev</th>
+                </tr>
+              </thead>
+              <tbody id="permImportanceTbody">
+                <tr><td colspan="4" style="text-align:center; padding:1.5rem;">Loading permutation importance...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plain-English Cybersecurity Glossary -->
+      <div class="card">
+        <div class="card-title">
+          <span>Cybersecurity Domain Knowledge Interpretation</span>
+          <span class="card-subtitle">How Network Flow Metrics Relate to Adversary Tactics</span>
+        </div>
+        <div class="grid-2" id="featureGlossaryList">
+          <!-- Injected by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 6: DATASET & SYSTEM INFORMATION -->
+    <section id="view-system" class="page-view">
+      <div class="view-header">
+        <div>
+          <h2>System Architecture &amp; Specifications</h2>
+          <p>Technical pipeline specifications, preprocessing architecture, and dataset references.</p>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:1.5rem;">
+        <!-- Dataset Card -->
+        <div class="card">
+          <div class="card-title">
+            <span>CIC-IDS2017 Dataset Schema</span>
+            <span class="card-subtitle">Canadian Institute for Cybersecurity (UNB)</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:0.6rem; font-size:0.825rem; color:var(--text-secondary);">
+            <p><strong>Primary Source:</strong> University of New Brunswick (UNB) CIC-IDS2017 benchmark dataset.</p>
+            <p><strong>Flow Features:</strong> Bidirectional statistical features generated by CICFlowMeter, capturing inter-arrival times, packet distributions, header lengths, and TCP control flags.</p>
+            <p><strong>Attack Scenarios:</strong> DDoS, DoS Hulk, PortScan, Botnet C2, and common anomalous network traffic patterns.</p>
+            <p><strong>Telemetry Type:</strong> High-level flow metadata extracted from packet headers without payload inspection.</p>
+          </div>
+        </div>
+
+        <!-- Preprocessing Transformation Summary -->
+        <div class="card">
+          <div class="card-title">
+            <span>Data Preprocessing Architecture</span>
+            <span class="card-subtitle">End-to-End Leakage-Free Pipeline</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:0.6rem; font-size:0.825rem; color:var(--text-secondary);">
+            <p><strong>1. Header Sanitization:</strong> Leading/trailing whitespace stripped across all CSV columns.</p>
+            <p><strong>2. Infinite/NaN Imputation:</strong> String and float infinities replaced with NaN and imputed with median values learned strictly on training data.</p>
+            <p><strong>3. Scaling:</strong> <code>RobustScaler</code> applied to handle heavy-tailed network transmission volume outliers.</p>
+            <p><strong>4. Feature Selection:</strong> Top 20 features selected using ANOVA F-statistic (<code>SelectKBest</code>) to ensure high throughput and low latency.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Capabilities Grid -->
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-title">
+          <span>Machine Learning Pipeline Capabilities</span>
+          <span class="card-subtitle">Integrated Detection &amp; Explainability Suite</span>
+        </div>
+        <div class="grid-3" style="gap:1rem;">
+          <div style="background:var(--bg-card-hover); padding:0.85rem; border-radius:var(--radius-sm); border-top:2px solid var(--accent-cyan);">
+            <strong style="color:var(--text-primary); font-size:0.85rem;">Supervised Classification</strong>
+            <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.3rem;">Random Forest, SVM, KNN, and Logistic Regression with binary and multiclass threat classification.</p>
+          </div>
+          <div style="background:var(--bg-card-hover); padding:0.85rem; border-radius:var(--radius-sm); border-top:2px solid var(--accent-amber);">
+            <strong style="color:var(--text-primary); font-size:0.85rem;">Unsupervised Outlier Isolation</strong>
+            <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.3rem;">Isolation Forest recursive tree isolation with calibrated 0-1 outlier scores and K-Means traffic clustering.</p>
+          </div>
+          <div style="background:var(--bg-card-hover); padding:0.85rem; border-radius:var(--radius-sm); border-top:2px solid var(--accent-violet);">
+            <strong style="color:var(--text-primary); font-size:0.85rem;">Deep Neural Network</strong>
+            <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.3rem;">Feedforward Multilayer Perceptron (MLP) with ReLU activations and backpropagation optimization.</p>
+          </div>
+          <div style="background:var(--bg-card-hover); padding:0.85rem; border-radius:var(--radius-sm); border-top:2px solid var(--accent-emerald);">
+            <strong style="color:var(--text-primary); font-size:0.85rem;">Explainable AI (XAI)</strong>
+            <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.3rem;">SHAP TreeExplainer per-record feature attribution and held-out permutation feature importance.</p>
+          </div>
+          <div style="background:var(--bg-card-hover); padding:0.85rem; border-radius:var(--radius-sm); border-top:2px solid #38bdf8;">
+            <strong style="color:var(--text-primary); font-size:0.85rem;">Robust Preprocessing</strong>
+            <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.3rem;">Data leakage prevention with training-fitted medians, RobustScaler IQR bounds, and ANOVA feature filtering.</p>
+          </div>
+          <div style="background:var(--bg-card-hover); padding:0.85rem; border-radius:var(--radius-sm); border-top:2px solid var(--accent-rose);">
+            <strong style="color:var(--text-primary); font-size:0.85rem;">REST API Integration</strong>
+            <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.3rem;">FastAPI endpoints with asynchronous request handling, in-memory model caching, and CSV streaming.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Defensive Disclaimer Alert -->
+      <div class="alert-box">
+        🛡️ <strong>Defensive Analysis Platform:</strong> Designed for offline network flow analysis and security research. It operates on pre-processed flow telemetry and does not perform active network packet sniffing or automated blocking.
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Explanation Modal -->
+  <div class="modal-overlay" id="explainModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="font-size:1.1rem; color:var(--text-primary);">Record Explainability (SHAP Attribution)</h3>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+      <div id="explainModalBody">
+        <!-- Rendered by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="notificationToast" style="display:none;"></div>
+
+  <!-- Footer -->
+  <footer>
+    <div>
+      <strong>Network Analysis Dashboard</strong> &mdash; Machine Learning Traffic Intelligence &amp; Anomaly Detection
+    </div>
+    <div>
+      Real-Time ML Pipeline &amp; Explainability
+    </div>
+  </footer>
+
+  <script type="module" src="/static/js/app.js"></script>
+</body>
+</html>

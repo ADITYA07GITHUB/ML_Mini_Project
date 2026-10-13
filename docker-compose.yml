@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  netguard-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: netguard_ai_app
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./reports:/app/reports
+    restart: unless-stopped

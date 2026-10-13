@@ -1,0 +1,42 @@
+{
+  "active_mode": "multiclass",
+  "last_trained": "2026-10-13 11:26:51",
+  "dataset_rows": 6000,
+  "features_selected": [
+    "Total Fwd Packets",
+    "Flow Packets/s",
+    "Flow IAT Min",
+    "Fwd IAT Std",
+    "Fwd IAT Min",
+    "Bwd IAT Mean",
+    "Bwd IAT Std",
+    "Bwd IAT Max",
+    "Bwd IAT Min",
+    "Fwd Header Length",
+    "ACK Flag Count",
+    "act_data_pkt_fwd",
+    "Active Mean",
+    "Active Std",
+    "Active Max",
+    "Active Min",
+    "Idle Mean",
+    "Idle Std",
+    "Idle Max",
+    "Idle Min"
+  ],
+  "classes": [
+    "BENIGN",
+    "Bot",
+    "DDoS",
+    "DoS Hulk",
+    "PortScan"
+  ],
+  "best_model": "Random Forest",
+  "models_available": [
+    "Random Forest",
+    "Support Vector Machine",
+    "K-Nearest Neighbors",
+    "Logistic Regression",
+    "Multilayer Perceptron"
+  ]
+}
